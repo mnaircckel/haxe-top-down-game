@@ -2,6 +2,7 @@ package ;
 
 import flixel.FlxSprite;
 import flixel.FlxG;
+import flixel.FlxObject;
 
 import Math;
 
@@ -15,14 +16,16 @@ class Player extends FlxSprite
 	var speed:Float;
 	var playerFriction:Float;
 	var aimAngle:Float;
-	
-	public function new(x:Float=0, y:Float) 
+	public function new(x:Float, y:Float) 
 	{
 		super(x, y);
-		loadGraphic(AssetPaths.doctor__png);
+		loadGraphic(AssetPaths.doctor__png,true,64,64);
 		speed = .20;
 		playerFriction = .030;
+		animation.add("right", [0,1,2],8,true);
+		animation.play("right");
 		
+	
 	}
 	
 	public function movement() 
@@ -49,7 +52,8 @@ class Player extends FlxSprite
 			velocity.y /= 1.1;
 		}
 		
-		if ( (FlxG.keys.pressed.A || FlxG.keys.pressed.D) && (FlxG.keys.pressed.W ||FlxG.keys.pressed.S) ) {
+		if ( (FlxG.keys.pressed.A || FlxG.keys.pressed.D) && 
+			(FlxG.keys.pressed.W ||FlxG.keys.pressed.S) ) {
 			acceleration.x /= Math.sqrt(speed * speed * 2);
 			acceleration.y /= Math.sqrt(speed * speed * 2);
 			acceleration.x *= speed;
@@ -84,9 +88,11 @@ class Player extends FlxSprite
 		
 	}
 	
-	override public function update()
+	override public function update():Void
 	{
+
 		movement();
+		super.update();
 	}
 	
 }
