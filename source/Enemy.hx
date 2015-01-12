@@ -6,7 +6,6 @@ import flixel.FlxObject;
 
 /**
  * Class for handling Enemies. 
- * @author Knoebber
  */
 class Enemy extends FlxSprite
 {
