@@ -8,6 +8,7 @@ import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
 import flixel.FlxG;
 import flixel.FlxCamera;
+import flixel.group.FlxTypedGroup;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -15,7 +16,11 @@ import flixel.FlxCamera;
 class PlayState extends FlxState
 {
 	var player:Player;
+	var testEnemy:Enemy;
 	var backdrop:Backdrop;
+	var enemies = new FlxTypedGroup<Enemy>(20);
+	var total_enemies = 0;
+	var spawn_count = 0;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -23,8 +28,11 @@ class PlayState extends FlxState
 	{
 		player = new Player(0, 0);
 		backdrop = new Backdrop();
+		testEnemy= new Enemy(20,100);
 		add(backdrop);
 		add(player);
+		add(testEnemy);
+		add(enemies);
 		FlxG.camera.follow(player);
 		super.create();
 	}
@@ -44,5 +52,12 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+		spawn_count++;
+		if(spawn_count>100)
+		{
+
+    	enemies.add(new Enemy(Std.random(100),Std.random(100)));
+    	spawn_count = 0;
+		}
 	}	
 }
