@@ -20,8 +20,8 @@ class Player extends FlxSprite
 	{
 		super(x, y);
 		loadGraphic(AssetPaths.doctor__png);
-		speed = .5;
-		playerFriction = .025;
+		speed = .20;
+		playerFriction = .030;
 		
 	}
 	
