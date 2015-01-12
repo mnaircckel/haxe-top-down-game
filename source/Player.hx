@@ -2,6 +2,7 @@ package ;
 
 import flixel.FlxSprite;
 import flixel.FlxG;
+
 import Math;
 
 /**
@@ -13,6 +14,7 @@ class Player extends FlxSprite
 	
 	var speed:Float;
 	var playerFriction:Float;
+	var aimAngle:Float;
 	
 	public function new(x:Float=0, y:Float) 
 	{
@@ -54,10 +56,24 @@ class Player extends FlxSprite
 			acceleration.y *= speed;
 		}
 		
-		
-		angle = velocity.x * 4.5;
-		if (velocity.y > 0)
-			angle *= 2;
+		var deltaX = FlxG.mouse.getScreenPosition().x - FlxG.width/2;
+		var deltaY = FlxG.mouse.getScreenPosition().y - FlxG.height/2;
+		var newAngle = Math.atan(Math.abs(deltaY) / Math.abs(deltaX)) * (180 / Math.PI);
+		if (deltaX > 0 && deltaY > 0) {
+			angle = newAngle+90;
+		}
+		else if (deltaX > 0 && deltaY > 0) {
+			angle = -newAngle+90;
+		}
+		else if (deltaX > 0 && deltaY < 0) {
+			angle = -newAngle+90;
+		}
+		else if (deltaX < 0 && deltaY < 0) {
+			angle = newAngle-90;
+		}
+		else if (deltaX < 0 && deltaY > 0) {
+			angle = -newAngle-90;
+		}
 			
 		
 			
