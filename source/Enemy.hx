@@ -55,10 +55,10 @@ class Enemy extends FlxSprite
 
 		if(distance<250)
 			idle = false;
-		else{
+		else
 			idle = true;
 			
-		}
+		
 
 		//move in a shitty square. feel free to change. 
 		if(idle)
@@ -90,14 +90,13 @@ class Enemy extends FlxSprite
 		}
 		else //if it is close then attack. 
 		{		
-			//make into unit vector so we can move towards target
 			if(distance<75){
 				//could be run time errors here because target is dynamic
 				//made it dynamic so anything that inherits from FlxSprite can
 				//be used as a target.
-				if(target.isAttacking)
-					killed=true;
-				
+				if(target.isAttacking && Math.abs(target.angle - angle) <50)
+						killed=true;
+						
 				if(!playingAttack){
 					animation.play("attack");
 					playingAttack=true;
@@ -109,11 +108,11 @@ class Enemy extends FlxSprite
 					playingRun=true;
 					playingAttack=false;
 				}
-
+			//make into unit vector so we can move towards target
 			deltaX/=distance; 
 			deltaY/=distance;
 			
-			//calculate rotation
+			//calculate rotation and change to degrees
 			theta = (Math.acos(deltaY) *(180/Math.PI));
 			if(deltaX>0)
 				theta*=-1;
