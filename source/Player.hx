@@ -33,6 +33,9 @@ class Player extends FlxSprite
 		animation.add("attack", [0, 1], 4, true);
 		animation.add("dead", [2], 1, true);
 		animation.play("idle");
+		//change the hitbox
+		width = 50;
+		height = 50;
 		
 	
 	}
