@@ -18,9 +18,9 @@ class PlayState extends FlxState
 	var player:Player;
 	var testEnemy:Enemy;
 	var backdrop:Backdrop;
-	var enemies = new FlxTypedGroup<Enemy>(20);
-	var total_enemies = 0;
-	var spawn_count = 0;
+	var enemies = new FlxTypedGroup<Enemy>(10);//can hold 10 enemies
+	var spawnCount = 0;
+	var playerCollision = false;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -28,10 +28,8 @@ class PlayState extends FlxState
 	{
 		player = new Player(0, 0);
 		backdrop = new Backdrop();
-		testEnemy= new Enemy(20,100);
 		add(backdrop);
 		add(player);
-		add(testEnemy);
 		add(enemies);
 		FlxG.camera.follow(player);
 		super.create();
@@ -52,12 +50,12 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-		spawn_count++;
-		if(spawn_count>100)
+		playerCollision=FlxG.collide(player,enemies);
+		spawnCount++;
+		if(spawnCount>100)
 		{
-
-    	enemies.add(new Enemy(Std.random(100),Std.random(100)));
-    	spawn_count = 0;
+    	enemies.add(new Enemy(Std.random(500),Std.random(500),player));
+    	spawnCount = 0;
 		}
 	}	
 }
