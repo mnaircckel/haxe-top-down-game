@@ -58,14 +58,14 @@ class Player extends FlxSprite
 		else if ( (Math.abs(velocity.x) + Math.abs(velocity.y)) > .5 ) {
 			if (!isWalking && !isAttacking) {
 				animation.play("walking");
+				isWalking = true;
 			}
-			isWalking = true;
 		}
 		else {
 			if (isWalking) {
 				animation.play("idle");
+				isWalking = false;
 			}
-			isWalking = false;
 		}
 	
 		
