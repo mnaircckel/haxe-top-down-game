@@ -26,7 +26,7 @@ class PlayState extends FlxState
 	 */
 	override public function create():Void
 	{	
-		player = new Player(0, 0);
+		player = new Player(600, 600);
 		backdrop = new Backdrop();
 		add(backdrop);
 		add(player);
