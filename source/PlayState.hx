@@ -18,9 +18,9 @@ class PlayState extends FlxState
 	var player:Player;
 	var testEnemy:Enemy;
 	var backdrop:Backdrop;
+	
+	var spawnTimer = 0;
 	var enemies = new FlxTypedGroup<Enemy>(10);//can hold 10 enemies
-	var spawnCount = 0;
-	var playerCollision = false;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -50,12 +50,13 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-		playerCollision=FlxG.collide(player,enemies);
-		spawnCount++;
-		if(spawnCount>100)
+		player.setIsColliding(FlxG.collide(player,enemies));
+
+		spawnTimer++;
+		if(spawnTimer > 100)
 		{
-    	enemies.add(new Enemy(Std.random(500),Std.random(500),player));
-    	spawnCount = 0;
+			enemies.add(new Enemy(Std.random(500),Std.random(500),player));
+			spawnTimer = 0;
 		}
 	}	
 }

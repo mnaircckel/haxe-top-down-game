@@ -13,12 +13,13 @@ import Math;
 class Player extends FlxSprite
 {
 	
+	var isColliding:Bool;
 	var speed:Float;
 	var playerFriction:Float;
 	var aimAngle:Float;
 	var isWalking:Bool;
 	var isAttacking:Bool;
-	var  attackTimer:Int;
+	var attackTimer:Int;
 	public function new(x:Float, y:Float) 
 	{
 		super(x, y);
@@ -27,6 +28,7 @@ class Player extends FlxSprite
 		playerFriction = .030;
 		isWalking = false;
 		isAttacking = false;
+		isColliding = false;
 		attackTimer = 0;
 		animation.add("idle", [7, 8], 2, true);
 		animation.add("walking", [3, 4, 5, 6], 8, true);
@@ -70,9 +72,6 @@ class Player extends FlxSprite
 				isWalking = false;
 			}
 		}
-	
-		
-		
 		
 	}
 	
@@ -136,6 +135,10 @@ class Player extends FlxSprite
 		x += velocity.x;
 		y += velocity.y;
 		
+	}
+	
+	public function setIsColliding(collison:Bool) {
+		isColliding = collison;
 	}
 	
 	override public function update():Void
