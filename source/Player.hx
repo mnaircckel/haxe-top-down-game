@@ -24,8 +24,8 @@ class Player extends FlxSprite
 	{
 		super(x, y);
 		loadGraphic(AssetPaths.doctor__png,true,64,64);
-		speed = .20;
-		playerFriction = .030;
+		speed = 65.0;
+		playerFriction = .25;
 		isWalking = false;
 		isAttacking = false;
 		isColliding = false;
@@ -129,11 +129,11 @@ class Player extends FlxSprite
 		}
 			
 		
-			
+		drag.x = drag.y = 0;
 		velocity.x += acceleration.x - playerFriction*velocity.x;
 		velocity.y += acceleration.y - playerFriction*velocity.y;
-		x += velocity.x;
-		y += velocity.y;
+		//x += velocity.x;
+		//y += velocity.y;
 		
 	}
 	

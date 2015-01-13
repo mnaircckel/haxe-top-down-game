@@ -25,13 +25,14 @@ class PlayState extends FlxState
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
-	{
+	{	
 		player = new Player(0, 0);
 		backdrop = new Backdrop();
 		add(backdrop);
 		add(player);
 		add(enemies);
 		FlxG.camera.follow(player);
+		FlxG.camera.setBounds(0,0,backdrop.width,backdrop.height);
 		super.create();
 	}
 	
@@ -50,7 +51,8 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-		player.setIsColliding(FlxG.collide(player,enemies));
+		FlxG.collide(enemies, enemies); // Collide with each other? Doesn't seem to work
+		player.setIsColliding(FlxG.collide(player, enemies));
 
 		spawnTimer++;
 		if(spawnTimer > 100)
