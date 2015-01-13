@@ -30,7 +30,7 @@ class Enemy extends FlxSprite
 	{
 		super(x, y);
 		target = targ;
-		speed = 5;
+		speed = 65.0;
 		loadGraphic(AssetPaths.enemy__png, true, 64, 64);
 		animation.add("run", [3, 4, 5, 6],8, true);
 		animation.add("death", [2],1, true);
@@ -66,23 +66,23 @@ class Enemy extends FlxSprite
 
 			walkCount++;
 			if(walkCount<50){
-				velocity.x = 1;
+				velocity.x = speed;
 				velocity.y=0;
 				angle = 270;
 			}
 			else if(walkCount>=50 && walkCount<100){
 				velocity.x = 0;
-				velocity.y = 1;
+				velocity.y = speed;
 				angle = 360;
 			}
 			else if(walkCount>=100 && walkCount <150){
-				velocity.x = -1;
+				velocity.x = -1*speed;
 				velocity.y = 0;
 				angle  = 90;
 			}
 			else if(walkCount>=150 && walkCount < 200){
 				velocity.x = 0;
-				velocity.y = -1;
+				velocity.y = -1*speed;
 				angle = 180;
 			}
 			else if(walkCount>=200)
@@ -120,12 +120,9 @@ class Enemy extends FlxSprite
 
 			angle=theta;
 			//trace(deltaX);
-			velocity.x= deltaX;
-			velocity.y = deltaY;
+			velocity.x= deltaX*speed;
+			velocity.y = deltaY*speed;
 		}
-
-		x += velocity.x;
-		y += velocity.y;
 	}
 	/*	
 	shows the bloody mess for a bit and then removes the instance
@@ -150,9 +147,8 @@ class Enemy extends FlxSprite
 			movement();
 		}
 		else
-		{
 			die();
-		}
+
 		super.update();
 	}
 
