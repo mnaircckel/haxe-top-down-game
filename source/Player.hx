@@ -50,7 +50,7 @@ class Player extends FlxSprite
 		}
 		
 		
-		if (FlxG.mouse.justPressed) {
+		if (FlxG.mouse.justPressed && !isAttacking) {
 			animation.play("attack",true);
 			isWalking = false;
 			isAttacking = true;
