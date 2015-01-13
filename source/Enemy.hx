@@ -16,10 +16,11 @@ class Enemy extends FlxSprite
 	var speed:Float;
 	
 	var attacking = false;
-	var target:FlxSprite;
+	var target:Dynamic;
 	var walkCount=0;
+	var deathCount=0;
 	var distance:Float;
-
+	var killed = false;
 	//the x and y distance to the target. 
 	var deltaX:Float;
 	var deltaY:Float;
@@ -49,7 +50,7 @@ class Enemy extends FlxSprite
 		distance = Math.sqrt((deltaX*deltaX)+(deltaY*deltaY));
 
 	}
-	public function movement():Void
+	private function movement():Void
 	{
 
 		if(distance<250)
@@ -90,10 +91,18 @@ class Enemy extends FlxSprite
 		else //if it is close then attack. 
 		{		
 			//make into unit vector so we can move towards target
-			if(distance<75 && !playingAttack){
-				animation.play("attack");
-				playingAttack=true;
-				playingRun=false;
+			if(distance<75){
+				//could be run time errors here because target is dynamic
+				//made it dynamic so anything that inherits from FlxSprite can
+				//be used as a target.
+				if(target.isAttacking)
+					killed=true;
+				
+				if(!playingAttack){
+					animation.play("attack");
+					playingAttack=true;
+					playingRun=false;
+				}
 			}
 			if(distance>75 && !playingRun){
 					animation.play("run");
@@ -117,12 +126,33 @@ class Enemy extends FlxSprite
 
 		x += velocity.x;
 		y += velocity.y;
-
+	}
+	/*	
+	shows the bloody mess for a bit and then removes the instance
+	*/
+	private function die():Void
+	{
+		deathCount++;
+		if(deathCount==15){
+			animation.play("death");
+			//change the hitbox
+			width=30;
+			height=30;
+		}
+		if(deathCount>100)
+			exists=false;
 	}
 	override public function update():Void
 	{
-		calculateTargetDistance();
-		movement();
+		if(!killed)
+		{
+			calculateTargetDistance();
+			movement();
+		}
+		else
+		{
+			die();
+		}
 		super.update();
 	}
 
